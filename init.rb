@@ -1,10 +1,11 @@
 require 'redmine'
+require 'thumbnails_asset_tag_helper_patch'
 
 Redmine::Plugin.register :redmine_thumbnails do
-  name 'Redmine Thumbnails plugin'
+  name 'Thumbnails plugin'
   author 'Just Lest'
   description ''
-  version '0.0.1'
+  version '0.1.0'
   
   settings :default => {
     'thumb_width' => '400',
