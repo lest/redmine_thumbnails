@@ -3,8 +3,8 @@ class ThumbnailsController < ApplicationController
   
   def show
     attach = Attachment.find(params[:id])
-    thumb_width ||= Setting.plugin_redmine_thumbnails["thumb_width"]
-    thumb_height ||= Setting.plugin_redmine_thumbnails["thumb_height"]
+    thumb_width = params[:width] || Setting.plugin_redmine_thumbnails["thumb_width"]
+    thumb_height = params[:height] || Setting.plugin_redmine_thumbnails["thumb_height"]
     img = Magick::Image.read("files/" + attach.disk_filename).first
     tw = thumb_width.to_i
     th = thumb_height.to_i

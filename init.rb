@@ -49,9 +49,15 @@ Redmine::WikiFormatting::Macros.register do
     })
     return nil unless attach
     
-    thumb_link = url_for :controller => :thumbnails, :action => :show, :id => attach.id
-    attach_link = url_for :controller => 'attachments', :action => 'download',
-      :id => attach.id, :filename => attach.filename
+    thumb_link = url_for :controller => :thumbnails,
+                         :action => :show,
+                         :id => attach.id,
+                         :width => thumb_width,
+                         :height => thumb_height
+    attach_link = url_for :controller => 'attachments',
+                          :action => 'download',
+                          :id => attach.id,
+                          :filename => attach.filename
     
     img = Magick::Image.read("files/" + attach.disk_filename).first
     tw = thumb_width.to_i
