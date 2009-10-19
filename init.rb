@@ -20,6 +20,7 @@ Redmine::WikiFormatting::Macros.register do
     url_prefix = "/" + url_prefix if url_prefix != ""
     thumb_width = nil
     thumb_height = nil
+    issue_id = nil
     args.each do |arg|
       name, value = arg.split("=")
       name = name.strip
@@ -28,13 +29,17 @@ Redmine::WikiFormatting::Macros.register do
           thumb_width = value
         elsif "height" == name
           thumb_height = value
+        elsif "issue" == name
+          issue_id = value.to_i
         end
       end
     end
     thumb_width ||= Setting.plugin_redmine_thumbnails["thumb_width"]
     thumb_height ||= Setting.plugin_redmine_thumbnails["thumb_height"]
     filename = args[0]
-    if obj.is_a?(Issue)
+    if issue_id
+      container = Issue.find(issue_id)
+    elsif obj.is_a?(Issue)
       container = obj
     elsif obj.is_a?(Journal)
       container = obj.issue
