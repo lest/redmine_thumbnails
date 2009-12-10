@@ -1,16 +1,15 @@
 class ThumbnailsController < ApplicationController
   unloadable
-  
+
+  caches_action :show
+
   def show
     attach = Attachment.find(params[:id])
     thumb_width = params[:width] || Setting.plugin_redmine_thumbnails["thumb_width"]
     thumb_height = params[:height] || Setting.plugin_redmine_thumbnails["thumb_height"]
-    img = Magick::Image.read("files/" + attach.disk_filename).first
-    tw = thumb_width.to_i
-    th = thumb_height.to_i
-    img = Magick::Image.read("files/" + attach.disk_filename).first
-    thumb = img.resize_to_fit(tw, th)
-    send_data thumb.to_blob, :type => thumb.mime_type, :disposition => 'inline'
+    image = MiniMagick::Image.from_file("files/#{attach.disk_filename}")
+    image.resize "#{thumb_width}x#{thumb_height}"
+    send_data image.to_blob, :type => image['image/%m'], :disposition => 'inline'
   rescue ActiveRecord::RecordNotFound
     render_404
   end

@@ -1,5 +1,7 @@
+require 'mini_magick'
 require 'redmine'
 require 'thumbnails_asset_tag_helper_patch'
+require 'thumbnails_issues_hooks'
 
 Redmine::Plugin.register :redmine_thumbnails do
   name 'Thumbnails plugin'
@@ -54,20 +56,23 @@ Redmine::WikiFormatting::Macros.register do
     })
     return nil unless attach
     
+    image = MiniMagick::Image.from_file("files/#{attach.disk_filename}")
+    tw = thumb_width.to_i
+    th = thumb_height.to_i
+    tw = image[:width] if tw == 0
+    th = image[:height] if th == 0
+
     thumb_link = url_for :controller => :thumbnails,
                          :action => :show,
                          :id => attach.id,
-                         :width => thumb_width,
-                         :height => thumb_height
+                         :width => tw,
+                         :height => th
     attach_link = url_for :controller => 'attachments',
                           :action => 'download',
                           :id => attach.id,
                           :filename => attach.filename
     
-    img = Magick::Image.read("files/" + attach.disk_filename).first
-    tw = thumb_width.to_i
-    th = thumb_height.to_i
-    if ((tw == 0 || img.columns < tw) && (th == 0 || img.rows < th))
+    if ((tw == 0 || image[:width] < tw) && (th == 0 || image[:height] < th))
       html = <<-eos
 <img src="#{attach_link}" />
 eos
