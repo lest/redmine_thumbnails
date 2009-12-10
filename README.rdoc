@@ -1,6 +1,6 @@
 = Redmine Thumbnails plugin
 
-The Thumbnails plugin adds ability to insert attachment's thumbnail into wiki pages, issues, forum messages.
+The Thumbnails plugin adds ability to insert attachment's thumbnails into issues and wiki pages
 
 == Features
 
@@ -19,7 +19,12 @@ A copy of the plugin can be downloaded from {GitHub}[http://github.com/lest/redm
 2. Make sure you have installed ImageMagick and mini_magick gem
 3. Restart your Redmine web servers (e.g. mongrel, thin, passenger)
 
-== Usage
+== Example Usage
+
+    {{thumb(example.png)}}
+    {{thumb(example.png, issue=123)}}
+    {{thumb(example.png, width=300)}}
+    {{thumb(example.png, width=300, height=200)}}
 
 == Project help
 
