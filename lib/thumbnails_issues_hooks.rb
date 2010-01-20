@@ -2,9 +2,9 @@ class ThumbnailsIssuesHooks < Redmine::Hook::ViewListener
   def view_issues_show_description_bottom(context = {})
     out = ''
     out += <<JS
-<script type="text/javascript" src="#{root_path}plugin_assets/redmine_thumbnails/javascripts/ZeroClipboard.js"></script>
+<script type="text/javascript" src="#{home_path}plugin_assets/redmine_thumbnails/javascripts/ZeroClipboard.js"></script>
 <script type="text/javascript">
-  ZeroClipboard.setMoviePath('#{root_path}plugin_assets/redmine_thumbnails/images/ZeroClipboard.swf');
+  ZeroClipboard.setMoviePath('#{home_path}plugin_assets/redmine_thumbnails/images/ZeroClipboard.swf');
   var counter = 0;
   $$('.issue .attachments p').each(function (element) {
     var filename = element.down().innerHTML;
@@ -17,7 +17,7 @@ class ThumbnailsIssuesHooks < Redmine::Hook::ViewListener
     button.id = button_id;
     button.width = '16';
     button.height = '16';
-    button.src = '#{root_path}images/copy.png';
+    button.src = '#{home_path}images/copy.png';
 
     element.appendChild(button);
 
