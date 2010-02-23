@@ -7,7 +7,7 @@ Redmine::Plugin.register :redmine_thumbnails do
   name 'Thumbnails plugin'
   author 'Just Lest'
   description ''
-  version '0.1.0'
+  version '0.1.1'
   
   settings :default => {
     'thumb_width' => '400',
@@ -41,19 +41,15 @@ Redmine::WikiFormatting::Macros.register do
     filename = args[0]
     if issue_id
       container = Issue.find(issue_id)
-    elsif obj.is_a?(Issue)
-      container = obj
     elsif obj.is_a?(Journal)
       container = obj.issue
     elsif obj.is_a?(WikiContent)
       container = obj.page
+    else
+      container = obj
     end
-    return nil unless container
-    attach = Attachment.find(:first, :conditions => {
-     :container_id => container.id,
-     :container_type => container.class.name,
-     :filename => filename
-    })
+    return nil unless container && container.attachments
+    attach = container.attachments.find(:first, :conditions => {:filename => filename})
     return nil unless attach
     
     image = MiniMagick::Image.from_file("files/#{attach.disk_filename}")
