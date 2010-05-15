@@ -1,6 +1,6 @@
 = Redmine Thumbnails plugin
 
-The Thumbnails plugin adds ability to insert attachment's thumbnails into issues and wiki pages
+The Thumbnails plugin adds ability to insert attachment's thumbnails into issues, documents and wiki pages
 
 == Features
 
