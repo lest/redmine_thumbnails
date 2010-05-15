@@ -8,7 +8,7 @@ Redmine::Plugin.register :redmine_thumbnails do
   author 'Just Lest'
   description ''
   version '0.1.1'
-  
+
   settings :default => {
     'thumb_width' => '400',
     'thumb_height' => '0'
@@ -48,10 +48,15 @@ Redmine::WikiFormatting::Macros.register do
     else
       container = obj
     end
+
+    if container.nil?
+      container = Document.find(params[:id]) if params[:controller] == 'documents' && params[:action] == 'show'
+    end
+
     return nil unless container && container.attachments
     attach = container.attachments.find(:first, :conditions => {:filename => filename})
     return nil unless attach
-    
+
     image = MiniMagick::Image.from_file("files/#{attach.disk_filename}")
     tw = thumb_width.to_i
     th = thumb_height.to_i
@@ -67,7 +72,7 @@ Redmine::WikiFormatting::Macros.register do
                           :action => 'download',
                           :id => attach.id,
                           :filename => attach.filename
-    
+
     if ((tw == 0 || image[:width] < tw) && (th == 0 || image[:height] < th))
       html = <<-eos
 <img src="#{attach_link}" />
