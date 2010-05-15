@@ -7,7 +7,7 @@ Redmine::Plugin.register :redmine_thumbnails do
   name 'Thumbnails plugin'
   author 'Just Lest'
   description ''
-  version '0.1.1'
+  version '0.1.2'
 
   settings :default => {
     'thumb_width' => '400',
