@@ -15,9 +15,10 @@ A copy of the plugin can be downloaded from {GitHub}[http://github.com/lest/redm
 
 == Installation and Setup
 
-1. Follow the Redmine plugin installation steps at http://www.redmine.org/wiki/redmine/Plugins
-2. Make sure you have installed ImageMagick and mini_magick gem
-3. Restart your Redmine web servers (e.g. mongrel, thin, passenger)
+1. Install plugin {redmine_image_cache}[https://github.com/twinslash/redmine_image_cache]
+2. Follow the Redmine plugin installation steps at http://www.redmine.org/wiki/redmine/Plugins
+3. Make sure you have installed ImageMagick and mini_magick gem
+4. Restart your Redmine web servers (e.g. mongrel, thin, passenger)
 
 == Example Usage
 
